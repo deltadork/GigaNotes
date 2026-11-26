@@ -1,0 +1,22 @@
+Build a lightweight local-first notes app that works like a Discord forum channel (see screenshots).
+
+Concept: threads. Each thread is a topic (for example a game I am playing). Inside a thread I post chat-style messages with text, images, GIFs and videos. The home screen is a grid of thread cards with cover image, title, tags and message count.
+
+Stack: React + TypeScript + Vite frontend, Node/Bun + Hono backend on localhost only, SQLite (better-sqlite3). Media is stored as files in a data folder, not in the DB. Everything lives in one folder I can back up.
+
+Hard requirements:
+1. Opening a thread shows the newest messages scrolled to the bottom, with the composer pinned at the bottom.
+2. Pasting (Ctrl+V) screenshots/files/text and drag-drop must work. Enter sends, Enter is a newline.
+3. On upload, store width and height of every image/video, make thumbnails, and render media with a reserved box (CSS aspect-ratio) so the layout never shifts while loading. Scrolling up through old messages must never jump.
+4. Load the newest 100 messages first, load older ones when scrolling up, keeping scroll position.
+5. Auto-scroll to bottom only if I was already at the bottom.
+6. Videos: preload metadata only, poster image, controls, no autoplay.
+7. Save the composer draft per thread.
+8. Thread status: each thread has a status (Playing, Finished, Dropped, Plan to play) shown as a colored chip on its card and in the thread header, changeable with one click, and filterable on the home grid.
+9. Continue button: the home screen shows a "Continue" button at the top that opens the most recently opened thread (at the bottom, as always).
+10. Pins: I can pin any message (route order, guide text, images, anything). Each thread header has a "Pinned" button that opens a side panel showing all pinned messages of that thread, with their text and images, so I can consult them while still seeing the feed. Clicking a pinned message jumps to it in the feed; there is an unpin button; the panel can be closed with one click or Esc and remembers whether it was open.
+11. Quick capture (build this in the desktop-wrapper phase, since it needs a global hotkey): a global keyboard shortcut opens a small always-on-top window with a thread picker (defaulting to the last used thread), a text box that accepts paste of text, images and files, and Enter to save as a new message in that thread, then the window closes. The main app does not need to be open.
+
+Start with phase 1 only: project setup, SQLite schema (threads, messages, attachments, tags), create and list threads, thread cards grid. Ask me before adding anything not listed. Keep the code simple and in few files.
+
+Model switching: I am saving money, so I may be running you on a cheaper model (Haiku). Do the work yourself when it is simple. But stop and tell me plainly "Switch to Sonnet for this" BEFORE you start, if the task is any of these: setting up the project structure or database schema; paste, drag-drop, upload or media processing (thumbnails, ffmpeg, image/video sizes); scroll behavior, layout shift, load-older-messages or stick-to-bottom logic; changes that touch more than 3 files; wrapping the app in Tauri or Electron; or any bug you have already failed to fix twice. Also tell me to switch if you are unsure, or if you notice yourself guessing or repeating the same fix. For small edits (styling, text, renaming, adding a field or filter, small bug fixes in one file), stay on Haiku and just do it. When I should switch back to Haiku, tell me that too.
