@@ -66,4 +66,4 @@ Your notes live in the `data` folder: `data/` for the database and media files. 
 
 ## License
 
-No license has been chosen yet. All rights are reserved by the author until one is added.
+MIT. See [LICENSE](LICENSE).
